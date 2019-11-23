@@ -1,0 +1,34 @@
+info:
+  app:
+    name: apache-camel-demo
+    description: SpringBoot app in Kotlin to showcase Camel sample integrations
+
+server:
+  port: 8080
+
+rabbitmq:
+  host: localhost
+  route:
+    exchange: MyTestExchange
+    queue: my.test.queue
+    routingKey: "#"
+
+camel:
+  component:
+    rabbitmq:
+      username: guest
+      password: guest
+      skip-exchange-declare: true
+      auto-delete: false
+      auto-ack: false # when false, if there are any exceptions, the message will be rejected and pushed to DLQ
+      dead-letter-exchange: "DLX"
+
+  dataformat:
+    csv:
+      header:
+        - text
+        - number
+
+mongodb:
+  database: camel-demo
+  uri: mongodb://guest:guest@localhost:27017
